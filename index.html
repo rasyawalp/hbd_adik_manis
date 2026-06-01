@@ -812,107 +812,47 @@ body {
 
 }
 
-@media (max-width: 480px){
+@media (max-width:480px){
 
   .bouquet-wrapper{
-    scale:.58;
+    scale:.65;
+    margin-top:-80px;
   }
 
-  .message h1{
-    font-size:2.2rem;
+  .bouquet-text{
+    margin-top:-120px;
   }
 
 }
 
 .stem{
   position:absolute;
-  width:6px;
+  width:8px;
+  border-radius:20px;
   background:linear-gradient(
     to bottom,
-    #5ed45e,
-    #2f8a2f
+    #8cff8c,
+    #3ca83c
   );
-  border-radius:20px;
   z-index:4;
+  box-shadow:
+    0 0 8px rgba(100,255,100,.4);
 }
 
-.s1{
-  left:185px;
-  top:130px;
-  height:250px;
-  transform:rotate(8deg);
-}
+.s1{left:170px; top:120px; height:420px; transform:rotate(8deg);}
+.s2{left:240px; top:120px; height:430px; transform:rotate(4deg);}
+.s3{left:320px; top:110px; height:440px;}
+.s4{left:400px; top:120px; height:430px; transform:rotate(-4deg);}
+.s5{left:470px; top:120px; height:420px; transform:rotate(-8deg);}
 
-.s2{
-  left:290px;
-  top:140px;
-  height:240px;
-}
+.s6{left:140px; top:200px; height:350px; transform:rotate(14deg);}
+.s7{left:220px; top:190px; height:360px; transform:rotate(7deg);}
+.s8{left:300px; top:190px; height:370px;}
+.s9{left:380px; top:190px; height:360px; transform:rotate(-7deg);}
+.s10{left:460px; top:200px; height:350px; transform:rotate(-14deg);}
 
-.s3{
-  left:400px;
-  top:130px;
-  height:250px;
-  transform:rotate(-8deg);
-}
-
-.s4{
-  left:130px;
-  top:220px;
-  height:180px;
-  transform:rotate(18deg);
-}
-
-.s5{
-  left:240px;
-  top:210px;
-  height:190px;
-  transform:rotate(8deg);
-}
-
-.s6{
-  left:350px;
-  top:210px;
-  height:190px;
-  transform:rotate(-8deg);
-}
-
-.s7{
-  left:460px;
-  top:220px;
-  height:180px;
-  transform:rotate(-18deg);
-}
-
-.s8{
-  left:170px;
-  top:310px;
-  height:120px;
-}
-
-.s9{
-  left:300px;
-  top:300px;
-  height:130px;
-}
-
-.s10{
-  left:430px;
-  top:310px;
-  height:120px;
-}
-
-.s11{
-  left:240px;
-  top:390px;
-  height:70px;
-}
-
-.s12{
-  left:360px;
-  top:390px;
-  height:70px;
-}
+.s11{left:240px; top:280px; height:280px;}
+.s12{left:360px; top:280px; height:280px;}
 
 .f13{
   top:20px;
@@ -980,6 +920,47 @@ body {
   left:300px;
   transform:rotate(45deg);
 }
+
+.filler{
+  position:absolute;
+  width:28px;
+  height:120px;
+  z-index:6;
+}
+
+.filler::before,
+.filler::after{
+  content:'';
+  position:absolute;
+  width:35px;
+  height:18px;
+  background:linear-gradient(
+    135deg,
+    #8df08d,
+    #2f7f2f
+  );
+  border-radius:40px 0;
+}
+
+.filler::before{
+  left:-15px;
+  top:20px;
+  transform:rotate(-35deg);
+}
+
+.filler::after{
+  right:-15px;
+  top:60px;
+  transform:rotate(145deg);
+}
+
+.fi1{left:150px; top:250px;}
+.fi2{left:210px; top:230px;}
+.fi3{left:270px; top:220px;}
+.fi4{left:330px; top:220px;}
+.fi5{left:390px; top:230px;}
+.fi6{left:450px; top:250px;}
+.fi7{left:300px; top:280px;}
   </style>
 </head>
 <body>
@@ -1081,6 +1062,14 @@ body {
 <div class="stem s10"></div>
 <div class="stem s11"></div>
 <div class="stem s12"></div>
+
+<div class="filler fi1"></div>
+<div class="filler fi2"></div>
+<div class="filler fi3"></div>
+<div class="filler fi4"></div>
+<div class="filler fi5"></div>
+<div class="filler fi6"></div>
+<div class="filler fi7"></div>
 
 <div class="mini-leaf ml1"></div>
 <div class="mini-leaf ml2"></div>
