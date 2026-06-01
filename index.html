@@ -545,10 +545,10 @@
     }
 
 .bouquet-wrapper{
-  width:min(650px,95vw);
-  aspect-ratio:650/720;
-  height:auto;
   position:relative;
+  width:650px;
+  height:720px;
+  animation:floating 5s ease-in-out infinite;
 }
 
 .bouquet-glow{
@@ -764,23 +764,26 @@
   border-radius:20px;
 }
 
-@media (max-width: 768px){
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
 
   body{
     overflow-x:hidden;
   }
 
   .bouquet-wrapper{
-    transform: scale(.68);
-    transform-origin:center center;
-    width:650px;
-    height:720px;
+    width:95vw;
+    height:95vw;
+    max-width:450px;
+    max-height:550px;
+    transform:scale(.75);
   }
 
   .bouquet-text{
-    font-size:.8rem;
     text-align:center;
     padding:0 20px;
+    font-size:.8rem;
+    letter-spacing:2px;
   }
 
   .message{
@@ -788,16 +791,13 @@
   }
 
   .message h1{
-    font-size:3rem;
+    font-size:clamp(2.2rem,10vw,4rem);
   }
 
   .message p{
-    font-size:.95rem;
+    font-size:.9rem;
+    line-height:1.7;
   }
-
-}
-
-@media(max-width:768px){
 
   .photo{
     width:80px;
@@ -805,9 +805,29 @@
     border-width:5px;
   }
 
-}
+  .photo1{
+    left:60px;
+    top:110px;
+  }
 
-@media(max-width:768px){
+  .photo2{
+    right:60px;
+    top:110px;
+  }
+
+  .photo3{
+    left:90px;
+    top:220px;
+  }
+
+  .photo4{
+    right:90px;
+    top:220px;
+  }
+
+  .flower{
+    transform:scale(.8);
+  }
 
   .gift-box{
     width:140px;
@@ -818,27 +838,6 @@
     font-size:.75rem;
     letter-spacing:2px;
   }
-
-}
-
-@media(max-width:768px){
-
-  .bouquet-scene{
-    overflow:hidden;
-  }
-
-  .bouquet-wrapper{
-    scale:.65;
-  }
-
-}
-
-@media(max-width:480px){
-
-  .bouquet-wrapper{
-    scale:.52;
-  }
-
 }
   </style>
 </head>
