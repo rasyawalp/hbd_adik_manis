@@ -989,6 +989,256 @@ body {
   bottom:40px;
   background:#efc4ff;
 }
+
+.next-surprise{
+  margin-top:40px;
+
+  display:none;
+
+  width:100%;
+
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+}
+
+.next-surprise button{
+  padding:16px 32px;
+  border:none;
+  border-radius:999px;
+  cursor:pointer;
+
+  background:linear-gradient(
+    145deg,
+    #0a0a0a,
+    #1a1a1a
+  );
+
+  color:rgba(255,255,255,0.85);
+
+  font-size:0.95rem;
+  letter-spacing:1px;
+  font-weight:500;
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.6),
+    inset 0 0 10px rgba(255,255,255,.05);
+
+  transition:.3s ease;
+}
+
+.next-surprise button:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.8),
+    inset 0 0 12px rgba(255,255,255,.08);
+}
+
+.voice-memories{
+  display:none;
+  margin-top:80px;
+  width:min(900px,90%);
+}
+
+.voice-memories h2{
+  font-family:'Cormorant Garamond', serif;
+
+  font-size:clamp(2.2rem,6vw,3.5rem);
+  font-weight:600;
+
+  letter-spacing:1px;
+
+  color:#ffffff;
+
+  text-align:center;
+
+  text-shadow:0 0 20px rgba(255,255,255,0.1);
+
+  margin-bottom:40px;
+}
+
+.voice-selector{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:40px;
+  flex-wrap:wrap;
+}
+
+.voice-btn{
+  padding:10px 22px;
+  border-radius:999px;
+  cursor:pointer;
+
+  background:linear-gradient(
+    145deg,
+    #0a0a0a,
+    #1a1a1a
+  );
+
+  color:rgba(255,255,255,0.7);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 6px 20px rgba(0,0,0,.6),
+    inset 0 0 8px rgba(255,255,255,.05);
+
+  transition:.3s ease;
+}
+
+.voice-btn:hover{
+  color:white;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.8),
+    inset 0 0 10px rgba(255,255,255,.08);
+}
+
+.voice-btn.active{
+  color:white;
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.15),
+    0 10px 30px rgba(0,0,0,.8),
+    inset 0 0 12px rgba(255,255,255,.1);
+}
+
+.voice-player-card{
+  width:100%;
+  max-width:850px;
+
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter:blur(25px);
+
+  border-radius:28px;
+  padding:28px;
+
+  display:flex;
+  align-items:center;
+  gap:28px;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    inset 0 0 20px rgba(255,255,255,0.02);
+}
+
+.memory-photo{
+  width:240px;
+}
+
+.memory-photo img{
+  width:100%;
+  aspect-ratio:3/4;
+
+  border-radius:18px;
+
+  border:4px solid rgba(255,255,255,0.9);
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.6);
+
+  transition:.4s ease;
+}
+
+.memory-photo img:hover{
+  transform:scale(1.05);
+}
+
+.voice-content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.voice-content h3{
+  font-size:1.2rem;
+  font-weight:500;
+  color:white;
+  letter-spacing:1px;
+}
+
+.voice-content audio{
+  width:100%;
+  filter:invert(1) grayscale(1);
+  opacity:.85;
+}
+
+@media(max-width:768px){
+
+  .voice-player-card{
+    flex-direction:column;
+    text-align:center;
+    padding:22px;
+  }
+
+  .memory-photo{
+    width:200px;
+  }
+
+  .voice-content{
+    width:100%;
+  }
+
+}
+
+@media(max-width:480px){
+
+  .voice-memories{
+    margin-top:80px;
+  }
+
+  .voice-player-card{
+    gap:18px;
+    border-radius:22px;
+  }
+
+  .memory-photo{
+    width:170px;
+  }
+
+}
+
+.voice-memories{
+  display:none;
+  margin-top:120px;
+
+  width:100%;
+  min-height:100vh;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  padding:40px 20px;
+}
+
+.voice-memories{
+  opacity:0;
+  transform:translateY(40px);
+  transition:.8s ease;
+}
+
+.voice-memories.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.voice-memories{
+  position:relative;
+
+  background:transparent; /* penting */
+
+  z-index:2;
+}
   </style>
 </head>
 <body>
@@ -1023,7 +1273,7 @@ body {
         <div class="bow"></div>
       </div>
 
-      <div class="hint">OPEN IT CAREFULLY</div>
+      <div class="hint">Yok dipencet kadonya!</div>
 
     </div>
 
@@ -1132,75 +1382,324 @@ body {
 
 </div>
 
-      <p class="bouquet-text">for the prettiest mystery in this world.</p>
+      <p class="bouquet-text">ini ceritanya buket bunga, kalo di iphone berantakan sorry yaa, di android bagus kok hasilnya.</p>
     </div>
 
     <div class="message" id="message">
-      <h1>Happy Birthday</h1>
+      <h1>met ultah yek, adik manis</h1>
 
       <p>
-        untuk seseorang yang selalu terlihat misterius,
-        tapi diam-diam membawa banyak warna untuk dunia.
+        cieee ultah, tahun depan bikin KTP nih. mulai belajar bikin ttd yang bagus ya hehehe.
+        gw berdoa dan berharap, semoga kedepannya lu menjadi pribadi yang lebih baik lagi yaaa.
       </p>
 
       <p>
-        semoga semua hal baik datang pelan-pelan ke hidup kamu,
-        dan semoga kamu selalu punya alasan untuk tersenyum,
-        bahkan di hari-hari yang berat.
+        semoga lu selalu punya alasan buat tersenyum bahagia selalu,
+        dan makin gak moodyan lagi yek, sekarang masih bocil, gapapa moodyan.
+        semoga suka ya sama kado gw, sederhana sih, tapi lucu kan konsepnya xixixi
       </p>
 
       <div class="final-line">
-        — from your annoying brother.
+        — dari suami ralyne dan maxine aamiin (Kak Rasya fjkt)
       </div>
     </div>
 
   </div>
 
-  <script>
-    const giftBox = document.getElementById('giftBox');
-    const message = document.getElementById('message');
-    const bouquetScene = document.getElementById('bouquetScene');
+<div class="next-surprise" id="nextSurprise">
 
-    const hint = document.querySelector('.hint');
-    const ribbonV = document.querySelector('.ribbon-v');
-    const ribbonH = document.querySelector('.ribbon-h');
-    const bow = document.querySelector('.bow');
+  <button id="showVoices">
+    masih ada satu kejutan lagi ✨
+  </button>
 
-    giftBox.addEventListener('click', () => {
+</div>
 
-      hint.style.opacity = '0';
-      hint.style.transform = 'translateY(10px)';
+<section class="voice-memories" id="voiceMemories">
 
-      ribbonV.style.transition = '0.7s ease';
-      ribbonH.style.transition = '0.7s ease';
-      bow.style.transition = '0.8s ease';
+  <h2>VN dari 2 oshi lu tercinta</h2>
 
-      ribbonV.style.transform = 'translateX(-50%) scaleY(0)';
-      ribbonH.style.transform = 'translateY(-50%) scaleX(0)';
+  <div class="voice-selector">
 
-      bow.style.transform = 'translateX(-50%) translateY(-40px) rotate(25deg)';
-      bow.style.opacity = '0';
+    <button class="voice-btn active"
+      data-person="trisha">
+      Trisha
+    </button>
 
-      setTimeout(() => {
-        giftBox.style.transition = '1s ease';
-        giftBox.style.transform = 'scale(0.85) rotate(8deg)';
-        giftBox.style.opacity = '0';
-      }, 500);
+    <button class="voice-btn"
+      data-person="intan">
+      Intan
+    </button>
 
-      setTimeout(() => {
-        bouquetScene.classList.add('show');
-      }, 1200);
+  </div>
 
-      setTimeout(() => {
-        bouquetScene.style.opacity = '0';
-      }, 6200);
+  <div class="voice-player-card">
 
-      setTimeout(() => {
-        bouquetScene.style.display = 'none';
-        message.classList.add('show');
-      }, 7200);
-    });
-  </script>
+    <div class="memory-photo">
+
+      <img
+        id="memoryImage"
+        src="fototrisha1.jpg">
+
+    </div>
+
+    <div class="voice-content">
+
+      <h3 id="voiceTitle">
+        Vn dari Trisha
+      </h3>
+
+      <audio
+        id="voiceAudio"
+        controls>
+      </audio>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+
+const giftBox = document.getElementById('giftBox');
+const message = document.getElementById('message');
+const bouquetScene = document.getElementById('bouquetScene');
+
+const hint = document.querySelector('.hint');
+const ribbonV = document.querySelector('.ribbon-v');
+const ribbonH = document.querySelector('.ribbon-h');
+const bow = document.querySelector('.bow');
+
+const nextSurprise =
+document.getElementById("nextSurprise");
+
+const showVoices =
+document.getElementById("showVoices");
+
+const voiceMemories =
+document.getElementById("voiceMemories");
+
+const voiceAudio =
+document.getElementById("voiceAudio");
+
+const memoryImage =
+document.getElementById("memoryImage");
+
+const voiceTitle =
+document.getElementById("voiceTitle");
+
+const buttons =
+document.querySelectorAll(".voice-btn");
+
+let slideInterval;
+
+/* ========================= */
+/* GIFT */
+/* ========================= */
+
+giftBox.addEventListener('click', () => {
+
+  hint.style.opacity = '0';
+  hint.style.transform = 'translateY(10px)';
+
+  ribbonV.style.transition = '0.7s ease';
+  ribbonH.style.transition = '0.7s ease';
+  bow.style.transition = '0.8s ease';
+
+  ribbonV.style.transform =
+  'translateX(-50%) scaleY(0)';
+
+  ribbonH.style.transform =
+  'translateY(-50%) scaleX(0)';
+
+  bow.style.transform =
+  'translateX(-50%) translateY(-40px) rotate(25deg)';
+
+  bow.style.opacity = '0';
+
+  setTimeout(() => {
+
+    giftBox.style.transition = '1s ease';
+
+    giftBox.style.transform =
+    'scale(0.85) rotate(8deg)';
+
+    giftBox.style.opacity = '0';
+
+  }, 500);
+
+  setTimeout(() => {
+    bouquetScene.classList.add('show');
+  }, 1200);
+
+  setTimeout(() => {
+    bouquetScene.style.opacity = '0';
+  }, 6200);
+
+  setTimeout(() => {
+
+    bouquetScene.style.display = 'none';
+
+    message.classList.add('show');
+
+    setTimeout(() => {
+
+nextSurprise.style.display = "flex";
+
+    },3000);
+
+  }, 7200);
+
+});
+
+/* ========================= */
+/* SURPRISE BUTTON */
+/* ========================= */
+
+showVoices.addEventListener("click",()=>{
+
+  voiceMemories.style.display = "flex"; // penting (karena kita pakai flex layout)
+
+  setTimeout(()=>{
+    voiceMemories.classList.add("show"); // trigger animasi
+  },100);
+
+  showVoices.parentElement.style.display = "none";
+
+});
+
+/* ========================= */
+/* DATA */
+/* ========================= */
+
+const memories = {
+
+  trisha:{
+    audio:"ultahtrisha.mpeg",
+    photos:[
+      "fototrisha1.jpg",
+      "fototrisha2.jpg",
+      "fototrisha3.jpg",
+      "fototrisha4.jpg",
+      "fototrisha5.jpg",
+      "fototrisha6.jpg",
+      "fototrisha7.jpg",
+      "fototrisha8.jpg"
+    ]
+  },
+
+  intan:{
+    audio:"ultahintan.mpeg",
+    photos:[
+      "fotointan1.jpg",
+      "fotointan2.jpg",
+      "fotointan3.jpg",
+      "fotointan4.jpg",
+      "fotointan5.jpg",
+      "fotointan6.jpg",
+      "fotointan7.jpg",
+      "fotointan8.jpg"
+    ]
+  }
+
+};
+
+/* ========================= */
+/* LOAD MEMORY */
+/* ========================= */
+
+function loadMemory(person){
+
+  const data = memories[person];
+
+  voiceAudio.pause();
+  voiceAudio.currentTime = 0;
+
+  clearInterval(slideInterval);
+
+  voiceAudio.src = data.audio;
+
+  voiceTitle.textContent =
+  "Voice Note " +
+  person.charAt(0).toUpperCase() +
+  person.slice(1);
+
+  memoryImage.src =
+  data.photos[0];
+
+  let current = 0;
+
+  voiceAudio.onplay = ()=>{
+
+    clearInterval(slideInterval);
+
+    slideInterval = setInterval(()=>{
+
+      current++;
+
+      if(current >= data.photos.length){
+        current = 0;
+      }
+
+      memoryImage.style.opacity = "0";
+
+      setTimeout(()=>{
+
+        memoryImage.src =
+        data.photos[current];
+
+        memoryImage.style.opacity = "1";
+
+      },300);
+
+    },2500);
+
+  };
+
+  voiceAudio.onpause = ()=>{
+    clearInterval(slideInterval);
+  };
+
+  voiceAudio.onended = ()=>{
+
+    clearInterval(slideInterval);
+
+    memoryImage.src =
+    data.photos[0];
+
+  };
+
+}
+
+/* ========================= */
+/* BUTTON SWITCH */
+/* ========================= */
+
+buttons.forEach(btn=>{
+
+  btn.addEventListener("click",()=>{
+
+    buttons.forEach(b=>
+      b.classList.remove("active")
+    );
+
+    btn.classList.add("active");
+
+    loadMemory(
+      btn.dataset.person
+    );
+
+  });
+
+});
+
+/* ========================= */
+/* INIT */
+/* ========================= */
+
+loadMemory("trisha");
+
+</script>
 
 </body>
 </html>
