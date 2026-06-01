@@ -545,10 +545,10 @@
     }
 
 .bouquet-wrapper{
+  width:min(650px,95vw);
+  aspect-ratio:650/720;
+  height:auto;
   position:relative;
-  width:650px;
-  height:720px;
-  animation:floating 5s ease-in-out infinite;
 }
 
 .bouquet-glow{
@@ -762,6 +762,83 @@
   right:-60px;
   transform:rotate(25deg);
   border-radius:20px;
+}
+
+@media (max-width: 768px){
+
+  body{
+    overflow-x:hidden;
+  }
+
+  .bouquet-wrapper{
+    transform: scale(.68);
+    transform-origin:center center;
+    width:650px;
+    height:720px;
+  }
+
+  .bouquet-text{
+    font-size:.8rem;
+    text-align:center;
+    padding:0 20px;
+  }
+
+  .message{
+    padding:20px;
+  }
+
+  .message h1{
+    font-size:3rem;
+  }
+
+  .message p{
+    font-size:.95rem;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .photo{
+    width:80px;
+    height:105px;
+    border-width:5px;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .gift-box{
+    width:140px;
+    height:140px;
+  }
+
+  .hint{
+    font-size:.75rem;
+    letter-spacing:2px;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .bouquet-scene{
+    overflow:hidden;
+  }
+
+  .bouquet-wrapper{
+    scale:.65;
+  }
+
+}
+
+@media(max-width:480px){
+
+  .bouquet-wrapper{
+    scale:.52;
+  }
+
 }
   </style>
 </head>
