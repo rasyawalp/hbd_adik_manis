@@ -1552,23 +1552,6 @@ body {
   font-size:.75rem;
 }
 
-.edit-name-btn{
-  border:none;
-  background:none;
-  cursor:pointer;
-
-  opacity:.6;
-
-  padding:0;
-
-  transition:.25s ease;
-}
-
-.edit-name-btn:hover{
-  opacity:1;
-  transform:scale(1.15);
-}
-
 #chatAvatar{
   cursor:pointer;
   transition:.3s ease;
@@ -1576,6 +1559,71 @@ body {
 
 #chatAvatar:hover{
   transform:scale(1.05);
+}
+
+.chat-menu-wrap{
+  margin-left:auto;
+  position:relative;
+}
+
+.chat-menu-btn{
+  background:none;
+  border:none;
+  color:white;
+  font-size:26px;
+  cursor:pointer;
+  padding:6px 10px;
+  line-height:1;
+}
+
+.chat-menu-btn:hover{
+  opacity:.8;
+}
+
+.chat-menu{
+  position:absolute;
+  top:45px;
+  right:0;
+
+  min-width:180px;
+
+  background:#111;
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:14px;
+
+  overflow:hidden;
+
+  display:none;
+
+  z-index:9999;
+
+  box-shadow:
+  0 15px 40px rgba(0,0,0,.45);
+}
+
+.chat-menu.show{
+  display:block;
+}
+
+.chat-menu button{
+  width:100%;
+  border:none;
+  background:none;
+
+  color:white;
+
+  text-align:left;
+
+  padding:13px 15px;
+
+  cursor:pointer;
+
+  transition:.25s;
+}
+
+.chat-menu button:hover{
+  background:rgba(255,255,255,.05);
 }
   </style>
 </head>
@@ -1807,7 +1855,7 @@ body {
 
 <section class="chat-section" id="chatSection">
 
-  <h2>Satu Pesan Terakhir 💌</h2>
+  <h2>Room Chat Oshi</h2>
 
   <div class="chat-app">
 
@@ -1849,65 +1897,80 @@ body {
     </div>
 
     <!-- ROOM CHAT -->
-    <div
-      class="chat-room"
-      id="chatRoom">
+<!-- ROOM CHAT -->
+<div
+  class="chat-room"
+  id="chatRoom">
 
-      <div class="chat-header">
+  <div class="chat-header">
 
-        <button
-          class="back-btn"
-          onclick="backToList()">
-          ←
-        </button>
+    <button
+      class="back-btn"
+      onclick="backToList()">
+      ←
+    </button>
 
-        <img
-          id="chatAvatar"
-          onclick="openProfilePhoto()"
-          title="Lihat foto profil">
+    <img
+      id="chatAvatar"
+      onclick="openProfilePhoto()"
+      title="Lihat foto profil">
 
-        <div class="chat-user-info">
+    <div class="chat-user-info">
 
-          <div class="chat-name-row">
-
-            <span id="chatName"></span>
-
-            <button
-              class="edit-name-btn"
-              onclick="editContactName()"
-              title="Ubah nama kontak">
-
-              ✏️
-
-            </button>
-
-          </div>
-
-          <small>online</small>
-
-        </div>
-
+      <div class="chat-name-row">
+        <span id="chatName"></span>
       </div>
+
+      <small>online</small>
+
+    </div>
+
+    <!-- MENU -->
+    <div class="chat-menu-wrap">
+
+      <button
+        class="chat-menu-btn"
+        onclick="toggleChatMenu(event)">
+        ⋮
+      </button>
 
       <div
-        class="chat-messages"
-        id="chatMessages">
-      </div>
+        class="chat-menu"
+        id="chatMenu">
 
-      <div class="chat-input">
+        <button onclick="editContactName()">
+          ✏️ Ganti Nama
+        </button>
 
-        <input
-          type="text"
-          id="chatInput"
-          placeholder="Tulis pesan..." />
-
-        <button onclick="sendMessage()">
-          Kirim
+        <button onclick="clearChatHistory()">
+          🗑️ Hapus Chat
         </button>
 
       </div>
 
     </div>
+
+  </div>
+
+  <div
+    class="chat-messages"
+    id="chatMessages">
+  </div>
+
+  <div class="chat-input">
+
+    <input
+      type="text"
+      id="chatInput"
+      placeholder="Tulis pesan..." />
+
+    <button onclick="sendMessage()">
+      Kirim
+    </button>
+
+  </div>
+
+</div>
 
   </div>
 
@@ -2217,7 +2280,7 @@ const chatData = {
     avatar:"fototrisha5.jpg",
 
     intro:
-    "Haiii Nadhiff 🥺💕 akhirnya umur 16 yaa. Trisha cuma mau bilang makasih karena udah selalu support aku. Semoga hari ini banyak hal baik yang datang ke kamu yaaa.",
+    "Haiii Kak Nadhiff 🥺💕 akhirnya umur 16 yaa. Trisha cuma mau bilang makasih karena udah selalu support aku. Semoga hari ini banyak hal baik yang datang ke kamu yaaa.",
 
     replies:[
       "Hehehe makasih yaa Nadhiff 🤍",
@@ -2241,6 +2304,505 @@ const chatData = {
       "Semangat sekolahnya yaa ✨",
       "Jangan lupa istirahat kalau capek."
     ]
+  }
+
+};
+
+/* ========================= */
+/* SMART REPLIES */
+/* ========================= */
+
+const smartReplies = {
+
+  trisha:{
+
+    greeting:[
+      "Hai juga ka Nadhiff 🥺🤍",
+      "Halo ka Nadhiff ✨",
+      "Hehehe akhirnya chat juga 😭💕",
+      "Aku nungguin ka Nadhiff nyapa loh 😤"
+    ],
+
+    thanks:[
+      "Sama-sama ka Nadhiff 🤍",
+      "Hehehe seneng kalau ka Nadhiff suka ✨",
+      "Aaaaa jadi ikut bahagia 😭💕"
+    ],
+
+    love:[
+      "Aaaaa ka Nadhiff bikin aku malu 😭💕",
+      "Makasih ya ka Nadhiff 🥺🤍",
+      "Aku terharu bacanya 😭✨"
+    ],
+
+    activity:[
+      "Lagi ngucapin ulang tahun buat ka Nadhiff dong 🎂",
+      "Lagi senyum-senyum baca chat ini 😭",
+      "Lagi mikirin semoga ka Nadhiff bahagia terus ✨"
+    ],
+
+    school:[
+      "Semangat sekolahnya ya ka Nadhiff 📚✨",
+      "Jangan lupa istirahat juga yaa 🥺"
+    ],
+
+    tired:[
+      "Kalau capek istirahat dulu ya ka Nadhiff 🥺",
+      "Jangan terlalu dipaksa ya 🤍"
+    ],
+
+    food:[
+      "Udah makan belum ka Nadhiff 😤",
+      "Kalau belum makan ayo makan duluu 🍜"
+    ],
+
+    birthday:[
+      "Sekali lagi selamat ulang tahun ka Nadhiff 🎂💕",
+      "Semoga semua harapannya tercapai yaa ✨"
+    ],
+
+sleep:[
+  "Kalau ngantuk ya tidur dulu ka Nadhiff 😤",
+  "Jangan begadang terus yaa 🥺",
+  "Tidur yang cukup ya ka Nadhiff 🤍"
+],
+
+miss:[
+  "Aaaaa aku juga kangen ka Nadhiff 🥺💕",
+  "Jadi terharu dengernya 😭",
+  "Kangen juga sama ka Nadhiff 🤍"
+],
+
+angry:[
+  "Jangan marah-marah terus ka Nadhiff 🥺",
+  "Kalau ada masalah cerita aja ya 🤍",
+  "Aku traktir es krim deh biar ga marah 😭"
+],
+
+happy:[
+  "Yeyyy aku ikut seneng ka Nadhiff 😭💕",
+  "Semoga bahagianya lama yaa ✨",
+  "Aku suka lihat ka Nadhiff bahagia 🤍"
+],
+
+gift:[
+  "Hadiahnya jangan dilihat dari barangnya yaa 🥺",
+  "Semoga hadiahnya bisa bikin ka Nadhiff senyum 🤍",
+  "Yang penting niatnya dulu 😭💕"
+],
+
+paskib:[
+  "Semangat paskibnya ya ka Nadhiff 🚩✨",
+  "Jangan lupa jaga kesehatan juga 🥺",
+  "Aku bangga loh sama ka Nadhiff 😭🤍"
+],
+
+motivation:[
+  "Semangat ya ka Nadhiff 🥺✨",
+  "Aku percaya ka Nadhiff pasti bisa 🤍",
+  "Pelan-pelan juga gapapa, yang penting jangan menyerah 💕"
+],
+
+moody:[
+  "Lagi bad mood ya ka Nadhiff 🥺",
+  "Semoga harinya segera membaik ya 🤍",
+  "Kalau mau cerita aku dengerin kok ✨"
+],
+
+sick:[
+  "Ya ampun ka Nadhiff sakit? 🥺",
+  "Jangan lupa minum obat ya 🤍",
+  "Semoga cepat sembuh yaa ✨"
+],
+
+future:[
+  "Semoga semua impian ka Nadhiff tercapai ✨",
+  "Aku yakin masa depan ka Nadhiff cerah 🤍",
+  "Jangan takut sama masa depan yaa 🥺"
+],
+
+kedinasan:[
+  "Semangat kalau mau masuk kedinasan ya ka Nadhiff 🥺",
+  "Aku doain semua prosesnya lancar 🤍",
+  "Jangan lupa belajar yang rajin ✨"
+],
+
+shy:[
+  "Aaaaa jangan bikin aku malu ka Nadhiff 😭💕",
+  "Aku jadi salting 🥺",
+  "Ih ka Nadhiff bisa aja 😭🤍"
+],
+
+weather:[
+  "Kalau hujan jangan lupa bawa jaket ya 🥺",
+  "Cuacanya lagi gimana di sana? ✨",
+  "Jaga kesehatan ya ka Nadhiff 🤍"
+],
+
+touched:[
+  "Aku juga terharu bacanya 😭🤍",
+  "Jangan bikin aku nangis dong 🥺",
+  "Makasih ya ka Nadhiff 💕"
+],
+
+hobby:[
+  "Yang penting ka Nadhiff seneng yaa ✨",
+  "Aku dukung hobinya 🤍",
+  "Seru banget sih itu 😭"
+],
+
+theater:[
+  "Semoga bisa theateran lagi ya ka Nadhiff 🥺🤍",
+  "Kalau ke theater hati-hati yaa ✨",
+  "Aku seneng kalau ka Nadhiff bisa nonton theater 😭"
+],
+
+seeu:[
+  "See u ya ka Nadhiff 🥺🤍",
+  "Sampai ketemu lagi ✨",
+  "Jangan lupa senyum yaa 😭"
+],
+
+jkt48:[
+  "Semangat terus support JKT48 yaa 🥺🤍",
+  "Siapa oshinya selain aku? 😭",
+  "JKT48 selalu punya cerita seru ✨"
+],
+
+breakfast:[
+  "Sarapan roti sama susu enak tuh 🥺",
+  "Jangan skip sarapan ya 🤍",
+  "Nasi uduk juga enak 😭"
+],
+
+lunch:[
+  "Ayam geprek kayaknya enak 🥺",
+  "Bakso juga cocok buat siang 🤍",
+  "Yang penting makan dulu ya 😭"
+],
+
+dinner:[
+  "Sop hangat enak buat malam 🥺",
+  "Jangan makan terlalu malam ya 🤍",
+  "Bakso juga enak 😭"
+],
+
+overthinking:[
+  "Jangan dipikirin sendirian ya ka Nadhiff 🥺",
+  "Semuanya pasti ada jalan keluarnya 🤍",
+  "Aku percaya ka Nadhiff kuat ✨"
+],
+
+fear:[
+  "Takut itu wajar kok 🥺",
+  "Aku doain semuanya lancar 🤍",
+  "Ka Nadhiff pasti bisa ✨"
+],
+
+exam:[
+  "Semangat ujiannya ya ka Nadhiff 🥺",
+  "Aku doain nilainya bagus 🤍",
+  "Jangan lupa istirahat juga ✨"
+],
+
+gabut:[
+  "Kalau gabut coba denger lagu deh 🥺",
+  "Atau istirahat sebentar 🤍",
+  "Cari aktivitas seru yuk 😭"
+],
+
+healing:[
+  "Healing itu penting kok 🥺",
+  "Semoga pikiran jadi lebih tenang 🤍",
+  "Jangan lupa menikmati harinya ✨"
+],
+
+travel:[
+  "Jalan-jalan kemana ka Nadhiff? 🥺",
+  "Semoga harinya menyenangkan 🤍",
+  "Hati-hati di jalan ya ✨"
+],
+
+snack:[
+  "Jajan secukupnya yaa 🥺",
+  "Es krim kayaknya enak 🤍",
+  "Aku jadi ikut lapar 😭"
+],
+
+discount:[
+  "Kalau diskonnya bagus boleh tuh 🥺",
+  "Tapi jangan kalap ya 🤍",
+  "Belanja seperlunya aja ✨"
+],
+
+promo:[
+  "Promo memang menggoda yaa 🥺",
+  "Cek dulu kebutuhannya 🤍",
+  "Siapa tau memang worth it ✨"
+],
+
+bokek:[
+  "Semoga dompet ka Nadhiff cepat terisi 🥺",
+  "Yang sabar ya 🤍",
+  "Aku ikut sedih 😭"
+],
+
+makeup:[
+  "Aku suka makeup yang natural 🥺",
+  "Yang penting nyaman dipakai 🤍",
+  "Makeup itu seru ✨"
+],
+
+beautiful:[
+  "Aaaaa makasih ka Nadhiff 🥺💕",
+  "Aku jadi malu 😭🤍",
+  "Ka Nadhiff bisa aja ✨"
+]
+
+  },
+
+  intan:{
+
+    greeting:[
+      "Hai Nadhiff 🎉",
+      "Halooo Nadhiff 😆",
+      "Akhirnya muncul juga 😭"
+    ],
+
+    thanks:[
+      "Sama-sama Nadhiff ✨",
+      "Seneng kalau kamu suka 😆",
+      "WKWKWK jadi ikut seneng 😭"
+    ],
+
+    love:[
+      "WKWKWK makasih Nadhiff 😭",
+      "Aku terharu bacanya 😭✨"
+    ],
+
+    activity:[
+      "Lagi semangat hari ini 🎉",
+      "Lagi ngirimin ucapan ulang tahun buat Nadhiff 😎"
+    ],
+
+    school:[
+      "Semangat sekolahnya Nadhiff 📚🔥",
+      "Jangan lupa kerjain tugas juga 😭"
+    ],
+
+    tired:[
+      "Kalau capek istirahat dulu 😤",
+      "Jangan begadang terus Nadhiff 😭"
+    ],
+
+    food:[
+      "Udah makan belum 😤",
+      "Ayo makan dulu sebelum chat lagi 🍔"
+    ],
+
+    birthday:[
+      "SELAMAT ULANG TAHUN LAGI 🎉🎉🎉",
+      "Semoga tahun ini jadi tahun terbaik 😆✨"
+    ],
+
+sleep:[
+  "Tidur dulu sanaa 😭",
+  "Jangan begadang mulu Nadhiff 😤",
+  "Istirahat yang cukup yaaa ✨"
+],
+
+miss:[
+  "WKWKWK jadi terharu 😭",
+  "Aku juga kangen Nadhiff ✨",
+  "Makasih ya udah bilang gitu 😭"
+],
+
+angry:[
+  "Siapa yang bikin Nadhiff marah 😤",
+  "Sini cerita dulu 😭",
+  "Tenang tenang jangan ngamuk dulu WKWK"
+],
+
+happy:[
+  "NAHH GITU DONG 😆🎉",
+  "Ikut seneng aku 😭✨",
+  "Semoga makin banyak hal baik datang ke kamu 🎉"
+],
+
+gift:[
+  "Kalau hadiahnya kurang jangan protes ya WKWK 😭",
+  "Semoga suka sama hadiahnya 🎁",
+  "Aku udah kasih yang terbaik 😆✨"
+],
+
+paskib:[
+  "PASKIB TERUSSS 🔥🚩",
+  "Semangat latihannya Nadhiff 😤",
+  "Jangan tumbang pas latihan ya WKWK 😭"
+],
+
+motivation:[
+  "AYOOO SEMANGAT 🔥😤",
+  "Jangan menyerah Nadhiff 😎",
+  "Gas terus pokoknya 🚀"
+],
+
+moody:[
+  "Waduh lagi ngambek nih 😭",
+  "Sini cerita dulu 😤",
+  "Jangan lama-lama bad mood yaaa ✨"
+],
+
+sick:[
+  "WOI CEPET SEMBUH 😭",
+  "Istirahat dulu jangan dipaksa 😤",
+  "Jangan bandel kalau lagi sakit 😭"
+],
+
+future:[
+  "Gas terus Nadhiff 🔥",
+  "Jangan takut gagal 😎",
+  "Aku yakin kamu bisa mencapai cita-citamu ✨"
+],
+
+kedinasan:[
+  "AYO TEMBUS KEDINASAN 🔥",
+  "Belajar terus Nadhiff 😤",
+  "Aku dukung dari sini 😎"
+],
+
+shy:[
+  "WKWKWK salting ya 😭",
+  "Ketahuan tuh 😆",
+  "Malu-malu kucing nih 😤"
+],
+
+weather:[
+  "Panas banget ya hari ini 😭",
+  "Cuacanya random banget 😤",
+  "Kalau hujan jangan lupa neduh 😆"
+],
+
+touched:[
+  "WOI AKU JADI IKUT TERHARU 😭",
+  "Sedih tapi bahagia 😭✨",
+  "Aku jadi senyum sendiri 😭"
+],
+
+hobby:[
+  "WKWKWK seru tuh 😆",
+  "Asal jangan lupa istirahat 😤",
+  "Hobinya keren juga ya 🎉"
+],
+
+theater:[
+  "AYO THEATERAN 🔥😭",
+  "Jangan lupa teriak call ya 😆",
+  "Semoga dapet kursi bagus 🎉"
+],
+
+seeu:[
+  "SEE UUU 😭🔥",
+  "Sampai ketemu lagi Nadhiff 😆",
+  "Dadahh 👋✨"
+],
+
+jkt48:[
+  "JKT48 TERBAIK 😭🔥",
+  "Jangan lupa support member favoritmu 😆",
+  "Oshi nomor satu siapa nih 😤"
+],
+
+breakfast:[
+  "Bubur ayam gas 😤",
+  "Nasi kuning juga mantap 😆",
+  "Yang penting jangan kosong perutnya 😭"
+],
+
+lunch:[
+  "MIE AYAM 🔥",
+  "Nasi goreng siang-siang mantap 😆",
+  "Sate juga enak tuh 😭"
+],
+
+dinner:[
+  "NASI GORENG MALAM-MALAM 🔥",
+  "Mie ayam juga boleh 😆",
+  "Yang penting jangan kelaperan 😭"
+],
+
+overthinking:[
+  "WOI JANGAN OVERTHINKING TERUS 😭",
+  "Pelan-pelan aja 😤",
+  "Besok juga belum tentu kejadian 😆"
+],
+
+fear:[
+  "JANGAN TAKUT 😤",
+  "Aku yakin kamu bisa 😆",
+  "Gas aja dulu 🔥"
+],
+
+exam:[
+  "SEMOGA DAPET 100 😭🔥",
+  "Belajar yang rajin 😤",
+  "Aku yakin bisa 😆"
+],
+
+gabut:[
+  "WKWKWK gabut banget ya 😭",
+  "Main game sana 😆",
+  "Cari hiburan dulu 🔥"
+],
+
+healing:[
+  "AYO HEALING 😭🔥",
+  "Refreshing dulu biar ga stres 😆",
+  "Jalan-jalan gas 😤"
+],
+
+travel:[
+  "WAH SERU TUH 😭",
+  "Jangan lupa foto-foto 😆",
+  "Nikmati liburannya 🔥"
+],
+
+snack:[
+  "JAJAN TERUSSS 😭",
+  "Martabak gas 😆",
+  "Aku juga mau 😤"
+],
+
+discount:[
+  "DISKON = SERANG 😭🔥",
+  "Kalau murah gas 😆",
+  "Tapi jangan boros 😤"
+],
+
+promo:[
+  "PROMO LAGI? 😭",
+  "Gas sebelum habis 😆",
+  "Jangan sampai nyesel 🔥"
+],
+
+bokek:[
+  "WKWKWK akhir bulan ya 😭",
+  "Aku juga sering bokek 😆",
+  "Semangat cari cuan 🔥"
+],
+
+makeup:[
+  "MAKEUP TIME 😭💄",
+  "Aku suka coba-coba look baru 😆",
+  "Yang penting pede 🔥"
+],
+
+beautiful:[
+  "WKWKWK MAKASIH 😭💕",
+  "Aku jadi salting 😆",
+  "Pujian diterima 😤✨"
+]
+
   }
 
 };
@@ -2406,21 +2968,13 @@ function sendMessage(){
 
   setTimeout(()=>{
 
-    const replies =
-    chatData[currentPerson].replies;
+const reply =
+getSmartReply(text);
 
-    const random =
-    replies[
-      Math.floor(
-        Math.random() *
-        replies.length
-      )
-    ];
-
-    addMessage(
-      random,
-      "them"
-    );
+addMessage(
+  reply,
+  "them"
+);
 
   },1500);
 
@@ -2548,6 +3102,610 @@ function loadSavedContactNames(){
 }
 
 loadSavedContactNames();
+
+function randomReply(arr){
+
+  return arr[
+    Math.floor(
+      Math.random() * arr.length
+    )
+  ];
+
+}
+
+function getSmartReply(text){
+
+text = normalizeText(text);
+
+const data =
+smartReplies[currentPerson];
+
+  if(
+    text.includes("hai") ||
+    text.includes("halo") ||
+    text.includes("hi")
+  ){
+    return randomReply(data.greeting);
+  }
+
+if(
+  text.includes("makasih") ||
+  text.includes("terima kasih") ||
+  text.includes("thanks")
+){
+
+  return currentPerson === "trisha"
+  ? "Sama-sama ka Nadhiff 🤍"
+  : "Sama-sama Nadhiff ✨";
+
+}
+
+if(
+  text.includes("aku sayang kamu")
+){
+
+  return currentPerson === "trisha"
+  ? "Aaaaa makasih ka Nadhiff 😭💕"
+  : "WKWKWK makasih Nadhiff 😭✨";
+
+}
+
+if(
+  text.includes("aku kangen kamu")
+){
+
+  return currentPerson === "trisha"
+  ? "Aku juga kangen ka Nadhiff 🥺🤍"
+  : "Aku juga kangen Nadhiff 😭✨";
+
+}
+
+  if(
+    text.includes("lagi apa") ||
+    text.includes("ngapain")
+  ){
+    return randomReply(data.activity);
+  }
+
+  if(
+    text.includes("sekolah") ||
+    text.includes("belajar") ||
+    text.includes("ujian")
+  ){
+    return randomReply(data.school);
+  }
+
+  if(
+    text.includes("capek") ||
+    text.includes("lelah") ||
+    text.includes("sedih")
+  ){
+    return randomReply(data.tired);
+  }
+
+  if(
+    text.includes("makan") ||
+    text.includes("lapar")
+  ){
+    return randomReply(data.food);
+  }
+
+  if(
+    text.includes("ulang tahun") ||
+    text.includes("ultah")
+  ){
+    return randomReply(data.birthday);
+  }
+
+if(
+  text.includes("tidur") ||
+  text.includes("ngantuk") ||
+  text.includes("begadang")
+){
+  return randomReply(data.sleep);
+}
+
+if(
+  text.includes("kangen") ||
+  text.includes("rindu") ||
+  text.includes("miss you")
+){
+  return randomReply(data.miss);
+}
+
+if(
+  text.includes("marah") ||
+  text.includes("kesel") ||
+  text.includes("bad mood")
+){
+  return randomReply(data.angry);
+}
+
+if(
+  text.includes("seneng") ||
+  text.includes("bahagia") ||
+  text.includes("happy")
+){
+  return randomReply(data.happy);
+}
+
+if(
+  text.includes("hadiah") ||
+  text.includes("kado") ||
+  text.includes("surprise")
+){
+  return randomReply(data.gift);
+}
+
+if(
+  text.includes("paskib") ||
+  text.includes("paskibraka") ||
+  text.includes("latihan")
+){
+  return randomReply(data.paskib);
+}
+
+if(
+  text.includes("semangat") ||
+  text.includes("mager") ||
+  text.includes("malas")
+){
+  return randomReply(data.motivation);
+}
+
+if(
+  text.includes("bad mood") ||
+  text.includes("moody") ||
+  text.includes("ngambek")
+){
+  return randomReply(data.moody);
+}
+
+if(
+  text.includes("sakit") ||
+  text.includes("demam") ||
+  text.includes("flu") ||
+  text.includes("pusing")
+){
+  return randomReply(data.sick);
+}
+
+if(
+  text.includes("masa depan") ||
+  text.includes("cita cita") ||
+  text.includes("cita-cita") ||
+  text.includes("kuliah") ||
+  text.includes("kerja")
+){
+  return randomReply(data.future);
+}
+
+if(
+  text.includes("kedinasan") ||
+  text.includes("ipdn") ||
+  text.includes("stin") ||
+  text.includes("stan")
+){
+  return randomReply(data.kedinasan);
+}
+
+if(
+  text.includes("malu") ||
+  text.includes("salting") ||
+  text.includes("deg degan")
+){
+  return randomReply(data.shy);
+}
+
+if(
+  text.includes("hujan") ||
+  text.includes("panas") ||
+  text.includes("cuaca")
+){
+  return randomReply(data.weather);
+}
+
+if(
+  text.includes("terharu") ||
+  text.includes("nangis") ||
+  text.includes("haru")
+){
+  return randomReply(data.touched);
+}
+
+if(
+  text.includes("hobi") ||
+  text.includes("game") ||
+  text.includes("main")
+){
+  return randomReply(data.hobby);
+}
+
+if(
+  text.includes("maaf")
+){
+
+  return currentPerson === "trisha"
+  ? "Gapapa kok ka Nadhiff 🥺🤍"
+  : "Santai aja Nadhiff 😆";
+
+}
+
+if(
+  text.includes("selamat pagi")
+){
+
+  return currentPerson === "trisha"
+  ? "Selamat pagi juga ka Nadhiff ☀️🤍"
+  : "Pagiii Nadhiff 🌞✨";
+
+}
+
+if(
+  text.includes("selamat siang")
+){
+
+  return currentPerson === "trisha"
+  ? "Selamat siang juga ka Nadhiff 🥺☀️"
+  : "Sianggg Nadhiff 😆";
+
+}
+
+if(
+  text.includes("selamat sore")
+){
+
+  return currentPerson === "trisha"
+  ? "Selamat sore ka Nadhiff 🌇🤍"
+  : "Soreee Nadhiff ✨";
+
+}
+
+if(
+  text.includes("selamat malam")
+){
+
+  return currentPerson === "trisha"
+  ? "Selamat malam juga ka Nadhiff 🌙🤍"
+  : "Malammm Nadhiff 😆🌙";
+
+}
+
+if(
+  text.includes("selamat tidur")
+){
+
+  return currentPerson === "trisha"
+  ? "Makasih ka Nadhiff 🥺🌙 Jangan begadang yaa"
+  : "Makasih Nadhiff 😆🌙 Tidur yang nyenyak ya";
+
+}
+
+/* ========================= */
+/* THEATER */
+/* ========================= */
+
+if(
+  text.includes("theater") ||
+  text.includes("teater") ||
+  text.includes("show")
+){
+  return randomReply(data.theater);
+}
+
+/* ========================= */
+/* SEE U */
+/* ========================= */
+
+if(
+  text.includes("see u") ||
+  text.includes("see you") ||
+  text.includes("sampai ketemu") ||
+  text.includes("ketemu lagi")
+){
+  return randomReply(data.seeu);
+}
+
+/* ========================= */
+/* JKT48 */
+/* ========================= */
+
+if(
+  text.includes("jkt48") ||
+  text.includes("jkt") ||
+  text.includes("oshi") ||
+  text.includes("member")
+){
+  return randomReply(data.jkt48);
+}
+
+/* ========================= */
+/* SARAPAN */
+/* ========================= */
+
+if(
+  text.includes("sarapan") ||
+  text.includes("makan pagi") ||
+  text.includes("breakfast")
+){
+  return randomReply(data.breakfast);
+}
+
+/* ========================= */
+/* MAKAN SIANG */
+/* ========================= */
+
+if(
+  text.includes("makan siang") ||
+  text.includes("lunch")
+){
+  return randomReply(data.lunch);
+}
+
+/* ========================= */
+/* MAKAN MALAM */
+/* ========================= */
+
+if(
+  text.includes("makan malam") ||
+  text.includes("dinner")
+){
+  return randomReply(data.dinner);
+}
+
+/* ========================= */
+/* LAPAR */
+/* ========================= */
+
+if(
+  text.includes("lapar") ||
+  text.includes("laper") ||
+  text.includes("laperr") ||
+  text.includes("lapar banget")
+){
+  return randomReply(data.dinner);
+}
+
+/* ========================= */
+/* OVERTHINKING */
+/* ========================= */
+
+if(
+  text.includes("overthinking") ||
+  text.includes("kepikiran") ||
+  text.includes("cemas") ||
+  text.includes("khawatir")
+){
+  return randomReply(data.overthinking);
+}
+
+/* ========================= */
+/* TAKUT */
+/* ========================= */
+
+if(
+  text.includes("takut") ||
+  text.includes("degdegan") ||
+  text.includes("deg degan") ||
+  text.includes("ngerasa takut")
+){
+  return randomReply(data.fear);
+}
+
+/* ========================= */
+/* UJIAN */
+/* ========================= */
+
+if(
+  text.includes("ujian") ||
+  text.includes("uts") ||
+  text.includes("uas") ||
+  text.includes("tes")
+){
+  return randomReply(data.exam);
+}
+
+/* ========================= */
+/* GABUT */
+/* ========================= */
+
+if(
+  text.includes("gabut") ||
+  text.includes("bosan") ||
+  text.includes("bete")
+){
+  return randomReply(data.gabut);
+}
+
+/* ========================= */
+/* HEALING */
+/* ========================= */
+
+if(
+  text.includes("healing") ||
+  text.includes("refreshing")
+){
+  return randomReply(data.healing);
+}
+
+/* ========================= */
+/* JALAN JALAN */
+/* ========================= */
+
+if(
+  text.includes("jalan jalan") ||
+  text.includes("jalan-jalan") ||
+  text.includes("travelling") ||
+  text.includes("liburan")
+){
+  return randomReply(data.travel);
+}
+
+/* ========================= */
+/* JAJAN */
+/* ========================= */
+
+if(
+  text.includes("jajan") ||
+  text.includes("snack") ||
+  text.includes("beli makanan")
+){
+  return randomReply(data.snack);
+}
+
+/* ========================= */
+/* DISKON */
+/* ========================= */
+
+if(
+  text.includes("diskon") ||
+  text.includes("sale") ||
+  text.includes("potongan harga")
+){
+  return randomReply(data.discount);
+}
+
+/* ========================= */
+/* PROMO */
+/* ========================= */
+
+if(
+  text.includes("promo") ||
+  text.includes("cashback") ||
+  text.includes("voucher")
+){
+  return randomReply(data.promo);
+}
+
+/* ========================= */
+/* BOKEK */
+/* ========================= */
+
+if(
+  text.includes("bokek") ||
+  text.includes("ga punya uang") ||
+  text.includes("gak punya uang") ||
+  text.includes("miskin")
+){
+  return randomReply(data.bokek);
+}
+
+/* ========================= */
+/* MAKEUP */
+/* ========================= */
+
+if(
+  text.includes("makeup") ||
+  text.includes("make up") ||
+  text.includes("lipstik") ||
+  text.includes("skincare")
+){
+  return randomReply(data.makeup);
+}
+
+/* ========================= */
+/* CANTIK */
+/* ========================= */
+
+if(
+  text.includes("cantik ga") ||
+  text.includes("cantik nggak") ||
+  text.includes("cantik gak")
+){
+  return currentPerson === "trisha"
+    ? "Cantik dongg 🥺🤍"
+    : "YA IYALAH 😤✨";
+}
+
+if(
+  text.includes("cantik") ||
+  text.includes("imut") ||
+  text.includes("gemes") ||
+  text.includes("lucu")
+){
+  return randomReply(data.beautiful);
+}
+
+  return randomReply(
+    chatData[currentPerson].replies
+  );
+
+}
+
+function normalizeText(text){
+
+  return text
+
+    .toLowerCase()
+
+    // huruf berulang
+    .replace(/(.)\1{2,}/g, "$1")
+
+    .trim();
+
+}
+
+/* ========================= */
+/* CHAT MENU */
+/* ========================= */
+
+function toggleChatMenu(e){
+
+  e.stopPropagation();
+
+  document
+    .getElementById("chatMenu")
+    .classList.toggle("show");
+
+}
+
+document.addEventListener("click",()=>{
+
+  const menu =
+  document.getElementById("chatMenu");
+
+  if(menu){
+    menu.classList.remove("show");
+  }
+
+});
+
+/* ========================= */
+/* HAPUS CHAT */
+/* ========================= */
+
+function clearChatHistory(){
+
+  if(!currentPerson) return;
+
+  const yakin =
+  confirm(
+    "Hapus seluruh chat?"
+  );
+
+  if(!yakin) return;
+
+  localStorage.removeItem(
+    "chat_" + currentPerson
+  );
+
+  const box =
+  document.getElementById(
+    "chatMessages"
+  );
+
+  box.innerHTML = "";
+
+  addMessage(
+    chatData[currentPerson].intro,
+    "them"
+  );
+
+  document
+    .getElementById("chatMenu")
+    .classList.remove("show");
+
+}
 </script>
 
 </body>
