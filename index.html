@@ -1476,6 +1476,107 @@ body {
   }
 
 }
+
+.profile-modal{
+
+  position:fixed;
+  inset:0;
+
+  opacity:0;
+  visibility:hidden;
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  background:rgba(0,0,0,.65);
+
+  backdrop-filter:blur(12px);
+
+  transition:.35s ease;
+
+  z-index:99999;
+
+}
+
+.profile-modal.show{
+
+  opacity:1;
+  visibility:visible;
+
+}
+
+.profile-modal img{
+
+  width:min(420px,90vw);
+
+  border-radius:24px;
+
+  transform:scale(.8);
+
+  transition:.35s ease;
+
+  box-shadow:
+  0 30px 80px rgba(0,0,0,.45);
+
+}
+
+.profile-modal.show img{
+
+  transform:scale(1);
+
+}
+
+.chat-user-info{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  margin-left:12px;
+}
+
+.chat-name-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.chat-name-row span{
+  color:white;
+  font-weight:600;
+  font-size:1rem;
+}
+
+.chat-user-info small{
+  color:rgba(255,255,255,.55);
+  font-size:.75rem;
+}
+
+.edit-name-btn{
+  border:none;
+  background:none;
+  cursor:pointer;
+
+  opacity:.6;
+
+  padding:0;
+
+  transition:.25s ease;
+}
+
+.edit-name-btn:hover{
+  opacity:1;
+  transform:scale(1.15);
+}
+
+#chatAvatar{
+  cursor:pointer;
+  transition:.3s ease;
+}
+
+#chatAvatar:hover{
+  transform:scale(1.05);
+}
   </style>
 </head>
 <body>
@@ -1646,7 +1747,7 @@ body {
 <div class="next-surprise" id="nextSurprise">
 
   <button id="showVoices">
-    masih ada satu kejutan lagi ✨
+    masih ada kejutan lagi nih ✨
   </button>
 
 </div>
@@ -1699,63 +1800,98 @@ body {
 <div class="next-surprise" id="chatSurprise">
 
   <button id="showChat">
-    masih ada satu pesan terakhir 💌
+    masih ada satu kejutan terakhir ✨
   </button>
 
 </div>
 
 <section class="chat-section" id="chatSection">
 
-  <h2>Room Chat Oshi 💌</h2>
+  <h2>Satu Pesan Terakhir 💌</h2>
 
   <div class="chat-app">
 
     <!-- LIST CHAT -->
     <div class="chat-list" id="chatList">
 
-      <div class="chat-contact"
-           onclick="openChat('trisha')">
+<div
+  class="chat-contact"
+  onclick="openChat('trisha')">
 
-        <img src="fototrisha5.jpg">
+  <img src="fototrisha5.jpg">
 
-        <div>
-          <h4>Trisha</h4>
-          <p>tap buat buka chat...</p>
-        </div>
+  <div>
+    <h4 id="contactName_trisha">
+      Trisha
+    </h4>
 
-      </div>
+    <p>tap buat buka chat...</p>
+  </div>
 
-      <div class="chat-contact"
-           onclick="openChat('intan')">
+</div>
 
-        <img src="fotointan4.jpg">
+<div
+  class="chat-contact"
+  onclick="openChat('intan')">
 
-        <div>
-          <h4>Intan</h4>
-          <p>ada pesan buat kamu...</p>
-        </div>
+  <img src="fotointan4.jpg">
 
-      </div>
+  <div>
+    <h4 id="contactName_intan">
+      Intan
+    </h4>
+
+    <p>ada pesan buat kamu...</p>
+  </div>
+
+</div>
 
     </div>
 
     <!-- ROOM CHAT -->
-    <div class="chat-room" id="chatRoom">
+    <div
+      class="chat-room"
+      id="chatRoom">
 
       <div class="chat-header">
 
-        <button onclick="backToList()">
+        <button
+          class="back-btn"
+          onclick="backToList()">
           ←
         </button>
 
-        <img id="chatAvatar">
+        <img
+          id="chatAvatar"
+          onclick="openProfilePhoto()"
+          title="Lihat foto profil">
 
-        <span id="chatName"></span>
+        <div class="chat-user-info">
+
+          <div class="chat-name-row">
+
+            <span id="chatName"></span>
+
+            <button
+              class="edit-name-btn"
+              onclick="editContactName()"
+              title="Ubah nama kontak">
+
+              ✏️
+
+            </button>
+
+          </div>
+
+          <small>online</small>
+
+        </div>
 
       </div>
 
-      <div class="chat-messages"
-           id="chatMessages">
+      <div
+        class="chat-messages"
+        id="chatMessages">
       </div>
 
       <div class="chat-input">
@@ -1772,6 +1908,19 @@ body {
       </div>
 
     </div>
+
+  </div>
+
+  <!-- FOTO PROFIL POPUP -->
+
+  <div
+    class="profile-modal"
+    id="profileModal">
+
+    <img
+      id="profilePreview"
+      src=""
+      alt="Profile">
 
   </div>
 
@@ -2035,7 +2184,7 @@ const showChat =
 document.getElementById("showChat");
 
 /* ========================= */
-/* CHAT SECTION HIDDEN */
+/* CHAT SECTION */
 /* ========================= */
 
 chatSection.style.display = "none";
@@ -2110,8 +2259,14 @@ function openChat(person){
   document.getElementById("chatRoom")
     .style.display = "flex";
 
+  const savedName =
+  localStorage.getItem(
+    "contact_" + person
+  );
+
   document.getElementById("chatName")
     .textContent =
+    savedName ||
     person.charAt(0).toUpperCase() +
     person.slice(1);
 
@@ -2124,10 +2279,31 @@ function openChat(person){
 
   box.innerHTML = "";
 
-  addMessage(
-    chatData[person].intro,
-    "them"
+  const savedChat =
+  localStorage.getItem(
+    "chat_" + person
   );
+
+  if(savedChat){
+
+    JSON.parse(savedChat)
+    .forEach(msg=>{
+
+      addMessage(
+        msg.text,
+        msg.type
+      );
+
+    });
+
+  }else{
+
+    addMessage(
+      chatData[person].intro,
+      "them"
+    );
+
+  }
 
 }
 
@@ -2142,6 +2318,39 @@ function backToList(){
 
   document.getElementById("chatList")
     .style.display = "flex";
+
+}
+
+/* ========================= */
+/* SAVE CHAT */
+/* ========================= */
+
+function saveChatHistory(person){
+
+  const messages =
+  document.querySelectorAll(".msg");
+
+  const history = [];
+
+  messages.forEach(msg=>{
+
+    history.push({
+
+      text:msg.textContent,
+
+      type:
+      msg.classList.contains("me")
+      ? "me"
+      : "them"
+
+    });
+
+  });
+
+  localStorage.setItem(
+    "chat_" + person,
+    JSON.stringify(history)
+  );
 
 }
 
@@ -2168,6 +2377,10 @@ function addMessage(text,type){
     behavior:"smooth",
     block:"end"
   });
+
+  if(currentPerson){
+    saveChatHistory(currentPerson);
+  }
 
 }
 
@@ -2227,6 +2440,114 @@ document
 
 });
 
+/* ========================= */
+/* PROFILE PHOTO */
+/* ========================= */
+
+function openProfilePhoto(){
+
+  const modal =
+  document.getElementById(
+    "profileModal"
+  );
+
+  document
+  .getElementById(
+    "profilePreview"
+  ).src =
+  document
+  .getElementById(
+    "chatAvatar"
+  ).src;
+
+  modal.classList.add("show");
+
+}
+
+function closeProfilePhoto(){
+
+  document
+  .getElementById(
+    "profileModal"
+  )
+  .classList.remove("show");
+
+}
+
+document
+.getElementById("profileModal")
+.addEventListener("click",e=>{
+
+  if(
+    e.target.id ===
+    "profileModal"
+  ){
+    closeProfilePhoto();
+  }
+
+});
+
+/* ========================= */
+/* EDIT CONTACT NAME */
+/* ========================= */
+
+function editContactName(){
+
+  if(!currentPerson) return;
+
+  const currentName =
+  document.getElementById("chatName")
+  .textContent;
+
+  const newName = prompt(
+    "Ubah nama kontak:",
+    currentName
+  );
+
+  if(!newName) return;
+
+  document.getElementById("chatName")
+    .textContent = newName;
+
+  document.getElementById(
+    "contactName_" + currentPerson
+  ).textContent = newName;
+
+  localStorage.setItem(
+    "contact_" + currentPerson,
+    newName
+  );
+
+}
+
+function loadSavedContactNames(){
+
+  Object.keys(chatData).forEach(person=>{
+
+    const savedName =
+    localStorage.getItem(
+      "contact_" + person
+    );
+
+    if(savedName){
+
+      const el =
+      document.getElementById(
+        "contactName_" + person
+      );
+
+      if(el){
+        el.textContent =
+        savedName;
+      }
+
+    }
+
+  });
+
+}
+
+loadSavedContactNames();
 </script>
 
 </body>
