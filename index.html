@@ -1425,9 +1425,15 @@ body {
 
 .msg{
   max-width:75%;
+  min-width:0;
+
   padding:12px 15px;
   border-radius:18px;
   font-size:.95rem;
+
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  white-space:pre-wrap;
 }
 
 .msg.them{
@@ -1624,6 +1630,67 @@ body {
 
 .chat-menu button:hover{
   background:rgba(255,255,255,.05);
+}
+
+.typing-bubble{
+  align-self:flex-start;
+
+  background:#202c33;
+
+  padding:12px 16px;
+
+  border-radius:18px;
+
+  display:flex;
+  gap:5px;
+
+  width:max-content;
+
+  animation:fadeTyping .25s ease;
+}
+
+.typing-bubble span{
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:#cfd4d8;
+
+  animation:bounce 1.2s infinite;
+}
+
+.typing-bubble span:nth-child(2){
+  animation-delay:.2s;
+}
+
+.typing-bubble span:nth-child(3){
+  animation-delay:.4s;
+}
+
+@keyframes bounce{
+
+  0%,80%,100%{
+    transform:translateY(0);
+    opacity:.4;
+  }
+
+  40%{
+    transform:translateY(-5px);
+    opacity:1;
+  }
+
+}
+
+@keyframes fadeTyping{
+  from{
+    opacity:0;
+    transform:translateY(5px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
   </style>
 </head>
@@ -1939,11 +2006,11 @@ body {
         id="chatMenu">
 
         <button onclick="editContactName()">
-          ✏️ Ganti Nama
+          Ganti Nama
         </button>
 
         <button onclick="clearChatHistory()">
-          🗑️ Hapus Chat
+          Hapus Chat
         </button>
 
       </div>
@@ -2557,6 +2624,106 @@ beautiful:[
   "Aaaaa makasih ka Nadhiff 🥺💕",
   "Aku jadi malu 😭🤍",
   "Ka Nadhiff bisa aja ✨"
+],
+
+story:[
+  "Tentu boleh dong ka Nadhiff 🥺🤍 aku dengerin kok, cerita aja pelan-pelan yaa.",
+  "Aku siap denger cerita ka Nadhiff ✨ mau cerita tentang apa nih?",
+  "Kalau ada yang pengen diceritain, aku di sini kok 🥺💕",
+  "Curhat ajaa, jangan dipendem sendiri ya 🤍",
+  "Aku penasaran nih, lagi ada cerita apa ka Nadhiff? ✨"
+],
+
+overthinking:[
+  "Kalau lagi banyak pikiran gitu pasti capek ya ka Nadhiff 🥺",
+  "Aku ngerti kok rasanya kalau kepala rasanya ga bisa berhenti mikir 😭",
+  "Jangan dipendam sendiri terus yaa ka Nadhiff 🤍",
+  "Semoga pelan pelan semua yang bikin kepikiran bisa selesai ✨",
+  "Kadang kita terlalu keras sama diri sendiri loh ka Nadhiff 🥺"
+],
+
+friend:[
+  "Lagi ada masalah sama temen ya ka Nadhiff? 🥺",
+  "Semoga semuanya bisa cepat membaik ya ✨",
+  "Kadang hubungan pertemanan emang ga selalu mudah 😭",
+  "Aku harap ka Nadhiff ketemu teman yang baik baik 🤍"
+],
+
+heartbreak:[
+  "Aduh pasti sakit ya ngalamin itu ka Nadhiff 🥺",
+  "Gapapa kalau sekarang masih sedih 😭",
+  "Semoga suatu hari nanti ka Nadhiff bisa tersenyum lagi 🤍",
+  "Jangan lupa tetap sayang sama diri sendiri ya 🥺"
+],
+
+sport:[
+  "Wah keren, lagi rajin olahraga ya ka Nadhiff 💪",
+  "Jangan lupa pemanasan dulu ya 😤",
+  "Semangat olahraganya ✨",
+  "Aku bangga kalau ka Nadhiff lagi jaga kesehatan 😆"
+],
+
+advice:[
+  "Kalau menurut aku, coba dipikir pelan pelan dulu ya ka Nadhiff 🥺",
+  "Aku dukung keputusan terbaik ka Nadhiff 🤍",
+  "Kadang jawaban terbaik itu yang bikin hati lebih tenang ✨",
+  "Aku yakin ka Nadhiff bisa menemukan solusi yang tepat 😭"
+],
+
+followUp:[
+  "Terus gimana akhirnya ka Nadhiff? 🥺",
+  "Aku penasaran lanjutannya 😭",
+  "Terus setelah itu apa yang terjadi? ✨",
+  "Udah lama ngerasain kayak gitu ka Nadhiff? 🥺",
+  "Aku masih pengen denger ceritanya loh 😆"
+],
+
+laugh:[
+  "WKWKWKWK 😭",
+  "Ka Nadhiff bisa aja 😭",
+  "Ih aku jadi ikut ketawa 😭",
+  "Lucu banget sih 😭",
+  "Aku ga nyangka bakal denger itu 😭"
+],
+
+lonely:[
+  "Pasti ga enak ya ngerasa sendirian 🥺",
+  "Aku temenin ngobrol kok ka Nadhiff 🤍",
+  "Jangan merasa sendirian terus ya 😭",
+  "Semoga ada banyak orang baik di sekitar ka Nadhiff ✨",
+  "Aku yakin masih banyak orang yang peduli sama ka Nadhiff 🤍"
+],
+
+flex:[
+  "Iya iya ka Nadhiff paling keren 😭",
+  "Yakin nih? 😆",
+  "Aku kasih nilai 8/10 dulu 😭",
+  "Wah percaya diri banget ya 😭",
+  "Aku suka rasa percaya dirinya 😆"
+],
+
+opinion:[
+  "Kalau menurut aku sih bagus kok 🥺",
+  "Aku suka sih kalau itu ✨",
+  "Yang penting ka Nadhiff nyaman 🤍",
+  "Menurutku cukup menarik 😆",
+  "Aku setuju sih sama itu 🥺"
+],
+
+advice:[
+  "Kalau menurut aku, coba dipikir pelan pelan dulu ya ka Nadhiff 🥺",
+  "Aku dukung keputusan terbaik ka Nadhiff 🤍",
+  "Kadang jawaban terbaik itu yang bikin hati lebih tenang ✨",
+  "Aku yakin ka Nadhiff bisa menemukan solusi yang tepat 😭",
+  "Ga perlu buru buru kok, pelan pelan aja 🥺"
+],
+
+surprised:[
+  "HAH serius? 😭",
+  "Eh beneran? 😳",
+  "Aku kaget dengernya 😭",
+  "Masa sih? 😭",
+  "Wah aku ga nyangka 😭"
 ]
 
   },
@@ -2801,6 +2968,106 @@ beautiful:[
   "WKWKWK MAKASIH 😭💕",
   "Aku jadi salting 😆",
   "Pujian diterima 😤✨"
+],
+
+story:[
+  "WOI CERITA AJA 😭🔥 aku siap jadi pendengar nih.",
+  "Curhat gas aja Nadhiff 😤 aku dengerin.",
+  "Ada apa nih? Cerita aja pelan-pelan 😭",
+  "Aku siap baca semuanya 😎✨",
+  "Kalau mau curhat ya curhat aja, jangan ditahan sendiri 😭"
+],
+
+overthinking:[
+  "Kalau lagi banyak pikiran gitu pasti capek ya Nadhif 🥺",
+  "Aku ngerti kok rasanya kalau kepala rasanya ga bisa berhenti mikir 😭",
+  "Jangan dipendam sendiri terus yaa Nadhif 🤍",
+  "Semoga pelan pelan semua yang bikin kepikiran bisa selesai ✨",
+  "Kadang kita terlalu keras sama diri sendiri loh Nadhif 🥺"
+],
+
+friend:[
+  "Lagi ada masalah sama temen ya Nadhif? 🥺",
+  "Semoga semuanya bisa cepat membaik ya ✨",
+  "Kadang hubungan pertemanan emang ga selalu mudah 😭",
+  "Aku harap Nadhif ketemu teman yang baik baik 🤍"
+],
+
+heartbreak:[
+  "Aduh pasti sakit ya ngalamin itu Nadhif 🥺",
+  "Gapapa kalau sekarang masih sedih 😭",
+  "Semoga suatu hari nanti Nadhif bisa tersenyum lagi 🤍",
+  "Jangan lupa tetap sayang sama diri sendiri ya 🥺"
+],
+
+sport:[
+  "Wah keren, lagi rajin olahraga ya Nadhif 💪",
+  "Jangan lupa pemanasan dulu ya 😤",
+  "Semangat olahraganya ✨",
+  "Aku bangga kalau Nadhif lagi jaga kesehatan 😆"
+],
+
+advice:[
+  "Kalau menurut aku, coba dipikir pelan pelan dulu ya Nadhif 🥺",
+  "Aku dukung keputusan terbaik Nadhif 🤍",
+  "Kadang jawaban terbaik itu yang bikin hati lebih tenang ✨",
+  "Aku yakin Nadhif bisa menemukan solusi yang tepat 😭"
+],
+
+followUp:[
+  "Terus gimana akhirnya Nadhif? 🥺",
+  "Aku penasaran lanjutannya 😭",
+  "Terus setelah itu apa yang terjadi? ✨",
+  "Udah lama ngerasain kayak gitu Nadhif? 🥺",
+  "Aku masih pengen denger ceritanya loh 😆"
+],
+
+laugh:[
+  "WKWKWKWK 😭",
+  "Nadhif lucu banget 😭",
+  "Aku jadi ikut ngakak 😭",
+  "Kok bisa kepikiran gitu sih 😭",
+  "HAHAHA 😭"
+],
+
+lonely:[
+  "Pasti ga enak ya ngerasa sendirian 🥺",
+  "Aku temenin ngobrol kok Nadhif 🤍",
+  "Jangan merasa sendirian terus ya 😭",
+  "Semoga ada banyak orang baik di sekitar Nadhif ✨",
+  "Aku yakin masih banyak orang yang peduli sama Nadhif 🤍"
+],
+
+flex:[
+  "Nadhif pede banget 😭",
+  "Aku ga bilang iya tapi aku ga bilang engga 😆",
+  "Boleh juga 😭",
+  "Yakin banget ya 😭",
+  "Percaya dirinya tinggi juga ya 😆"
+],
+
+opinion:[
+  "Menurut aku sih oke 😆",
+  "Bagus kok Nadhif ✨",
+  "Yang penting Nadhif suka 🤍",
+  "Aku setuju sih 😭",
+  "Kalau aku sih bakal pilih itu 😆"
+],
+
+advice:[
+  "Kalau menurut aku, coba dipikir pelan pelan dulu ya Nadhif 🥺",
+  "Aku dukung keputusan terbaik Nadhif 🤍",
+  "Kadang jawaban terbaik itu yang bikin hati lebih tenang ✨",
+  "Aku yakin Nadhif bisa menemukan solusi yang tepat 😭",
+  "Ga perlu buru buru kok, pelan pelan aja 🥺"
+],
+
+surprised:[
+  "HAH 😭",
+  "Serius Nadhif? 😳",
+  "Aku ga nyangka 😭",
+  "Wah kaget banget 😭",
+  "Beneran itu? 😭"
 ]
 
   }
@@ -2946,6 +3213,50 @@ function addMessage(text,type){
 
 }
 
+function showTypingBubble(){
+
+  const box =
+  document.getElementById(
+    "chatMessages"
+  );
+
+  const typing =
+  document.createElement("div");
+
+  typing.className =
+  "typing-bubble";
+
+  typing.id =
+  "typingBubble";
+
+  typing.innerHTML = `
+    <span></span>
+    <span></span>
+    <span></span>
+  `;
+
+  box.appendChild(typing);
+
+  typing.scrollIntoView({
+    behavior:"smooth",
+    block:"end"
+  });
+
+}
+
+function hideTypingBubble(){
+
+  const typing =
+  document.getElementById(
+    "typingBubble"
+  );
+
+  if(typing){
+    typing.remove();
+  }
+
+}
+
 /* ========================= */
 /* SEND MESSAGE */
 /* ========================= */
@@ -2966,17 +3277,24 @@ function sendMessage(){
 
   input.value = "";
 
-  setTimeout(()=>{
+showTypingBubble();
 
-const reply =
-getSmartReply(text);
+const delay =
+1500 + Math.random()*2500;
 
-addMessage(
-  reply,
-  "them"
-);
+setTimeout(()=>{
 
-  },1500);
+  hideTypingBubble();
+
+  const reply =
+  getSmartReply(text);
+
+  addMessage(
+    reply,
+    "them"
+  );
+
+},delay);
 
 }
 
@@ -3119,6 +3437,36 @@ text = normalizeText(text);
 
 const data =
 smartReplies[currentPerson];
+
+if(text.length > 50){
+
+  const longStoryReplies = {
+
+    trisha:[
+      "Makasih ya ka Nadhiff udah mau cerita 🥺🤍",
+      "Aku ngerti sedikit gimana perasaan ka Nadhiff sekarang ✨",
+      "Pasti ga mudah ya ngalamin itu semua 🥺",
+      "Terima kasih udah percaya buat cerita di sini 🤍"
+    ],
+
+    intan:[
+      "Wah ceritanya panjang juga 😭",
+      "Makasih udah mau cerita Nadhiff ✨",
+      "Aku baca semuanya loh 😤",
+      "Semoga setelah cerita jadi sedikit lebih lega ya 😭"
+    ]
+
+  };
+
+  const arr =
+  longStoryReplies[currentPerson];
+
+  return arr[
+    Math.floor(
+      Math.random()*arr.length
+    )
+  ];
+}
 
   if(
     text.includes("hai") ||
@@ -3624,6 +3972,139 @@ if(
   text.includes("lucu")
 ){
   return randomReply(data.beautiful);
+}
+
+if(
+  text.includes("cerita") ||
+  text.includes("curhat") ||
+  text.includes("curcol") ||
+  text.includes("aku mau cerita") ||
+  text.includes("aku pengen cerita") ||
+  text.includes("boleh curhat") ||
+  text.includes("aku ada masalah")
+){
+  return randomReply(data.story);
+}
+
+if(
+  text.includes("overthinking") ||
+  text.includes("kepikiran") ||
+  text.includes("cemas") ||
+  text.includes("khawatir") ||
+  text.includes("takut") ||
+  text.includes("bingung")
+){
+  return randomReply(data.overthinking);
+}
+
+if(
+  text.includes("temen") ||
+  text.includes("teman") ||
+  text.includes("sahabat") ||
+  text.includes("bestie") ||
+  text.includes("kawan")
+){
+  return randomReply(data.friend);
+}
+
+if(
+  text.includes("putus") ||
+  text.includes("galau") ||
+  text.includes("mantan") ||
+  text.includes("ditinggal") ||
+  text.includes("patah hati")
+){
+  return randomReply(data.heartbreak);
+}
+
+if(
+  text.includes("olahraga") ||
+  text.includes("gym") ||
+  text.includes("lari") ||
+  text.includes("jogging") ||
+  text.includes("fitness") ||
+  text.includes("futsal") ||
+  text.includes("badminton") ||
+  text.includes("basket")
+){
+  return randomReply(data.sport);
+}
+
+if(
+  text.includes("gimana ya") ||
+  text.includes("harus gimana") ||
+  text.includes("minta saran") ||
+  text.includes("kasih saran") ||
+  text.includes("menurut kamu") ||
+  text.includes("menurutmu") ||
+  text.includes("saran dong")
+){
+  return randomReply(data.advice);
+}
+
+if(
+  text.includes("wkwk") ||
+  text.includes("wk") ||
+  text.includes("haha") ||
+  text.includes("hahaha") ||
+  text.includes("awokwok") ||
+  text.includes("lol")
+){
+  return randomReply(data.laugh);
+}
+
+if(
+  text.includes("sendiri") ||
+  text.includes("kesepian") ||
+  text.includes("ga punya temen") ||
+  text.includes("tidak punya teman") ||
+  text.includes("ga ada temen") ||
+  text.includes("ga ada teman")
+){
+  return randomReply(data.lonely);
+}
+
+if(
+  text.includes("aku ganteng") ||
+  text.includes("aku keren") ||
+  text.includes("aku hebat") ||
+  text.includes("aku jago") ||
+  text.includes("aku terbaik")
+){
+  return randomReply(data.flex);
+}
+
+if(
+  text.includes("bagus ga") ||
+  text.includes("bagus gak") ||
+  text.includes("cocok ga") ||
+  text.includes("cocok gak") ||
+  text.includes("gimana menurutmu") ||
+  text.includes("gimana menurut kamu") ||
+  text.includes("menurutmu gimana")
+){
+  return randomReply(data.opinion);
+}
+
+if(
+  text.includes("minta saran") ||
+  text.includes("kasih saran") ||
+  text.includes("saran dong") ||
+  text.includes("harus gimana") ||
+  text.includes("gimana ya") ||
+  text.includes("menurut kamu aku harus")
+){
+  return randomReply(data.advice);
+}
+
+if(
+  text.includes("serius") ||
+  text.includes("beneran") ||
+  text.includes("masa") ||
+  text.includes("anjir") ||
+  text.includes("astaga")
+){
+  return randomReply(data.surprised);
 }
 
   return randomReply(
