@@ -2815,6 +2815,19 @@ smalltalk:[
   "Hari ini lumayan menyenangkan 🤍",
   "Aku lagi pengen ngobrol nih 😭",
   "Biasa aja sih, tapi jadi lebih seru karena ada ka Nadhiff 😆"
+],
+
+called:[
+  "Iya ka Nadhiff? 🥺",
+  "Kenapa manggil aku? 😭",
+  "Aku di sini kok 🤍",
+  "Ada apa ka Nadhiff? ✨",
+  "Iyaaa? 😆",
+  "Hehe kenapa? 🥺",
+  "Aku denger kok 😭",
+  "Manggil aku ya? 🤍",
+  "Ada yang bisa aku bantu? ✨",
+  "Ka Nadhiff manggil aku terus 😭"
 ]
 
   },
@@ -3250,6 +3263,19 @@ smalltalk:[
   "Hari ini lumayan menyenangkan 🤍",
   "Aku lagi pengen ngobrol nih 😭",
   "Biasa aja sih, tapi jadi lebih seru karena ada Nadhif 😆"
+],
+
+called:[
+  "Iya Nadhif? 🥺",
+  "Kenapa manggil aku? 😭",
+  "Aku di sini kok 🤍",
+  "Ada apa Nadhif? ✨",
+  "Iyaaa? 😆",
+  "Hehe kenapa? 🥺",
+  "Aku denger kok 😭",
+  "Manggil aku ya? 🤍",
+  "Ada yang mau diceritain? 😆",
+  "Nadhif manggil aku terus 😭"
 ]
 
   }
@@ -4407,6 +4433,52 @@ if(
   text === "lagi di mana"
 ){
   return randomReply(data.smalltalk);
+}
+
+if(
+  text === "trisha" ||
+  text === "tica" ||
+  text === "trica" ||
+  text === "tris" ||
+  text === "agath" ||
+  text === "agatha" ||
+  text === "bocil" ||
+  text === "dek" ||
+  text === "de" ||
+  text === "dedek" ||
+  text === "dek trisha" ||
+  text === "de trisha" ||
+  text === "dek tica" ||
+  text === "de tica" ||
+  text === "dek trica" ||
+  text === "dek agath" ||
+  text === "de agath" ||
+  text === "dek agatha" ||
+  text === "de agatha" ||
+  text === "dek tris" ||
+  text === "de tris"
+){
+  return randomReply(data.called);
+}
+
+if(
+  text === "intan" ||
+  text === "ntan" ||
+  text === "tan" ||
+  text === "peri" ||
+  text === "nuy" ||
+  text === "cantik" ||
+  text === "dek intan" ||
+  text === "ka intan" ||
+  text === "kak intan" ||
+  text === "kak nur intan" ||
+  text === "nur intan" ||
+  text === "kakak" ||
+  text === "kak" ||
+  text === "ka" ||
+  text === "kaka"
+){
+  return randomReply(data.called);
 }
 
   return randomReply(
